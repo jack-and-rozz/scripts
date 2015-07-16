@@ -1,6 +1,4 @@
 #!/bin/sh
-### HTMLファイルの内容を正規表現で置換する
-
 
 declare -i argc=0
 declare -a argv=()
@@ -45,20 +43,12 @@ if [ $argc -lt 2 ];then
     usage;
 fi
 
-
-#echo $argc
-#echo ${argv[0]}
-#echo ${argv[1]}
-#echo ${argv[2]}
-
 if [ $FLAG_ALL = 1 ]
 then
-    # .htmlファイルのbackupをとる（シェルスクリプト基本リファレンスp96）
     for file in *.*
     do
 	cp -p "$file" "$file".bak
     done
-    # カレントディレクトリの.htmlファイル内の文字列を置換して上書き保存する
     exec find . -maxdepth 1 -name '*.*' -type f -print0 | xargs -0 perl -p -i -e "s/${argv[0]}/${argv[1]}/g"
 else
     if [ $argc -gt 2 ]; then
